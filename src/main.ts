@@ -1,6 +1,7 @@
 import { createApp } from 'vue';
 import { createRouter, createWebHistory } from 'vue-router';
 import App from './App.vue';
+import '@/style.scss';
 
 import ResumeFormView from '@/views/ResumeFormView.vue';
 import CoverLetterFormView from '@/views/CoverLetterFormView.vue';
