@@ -12,6 +12,7 @@
                 </li>
             </ul>
         </aside>
+        <router-view></router-view>
     </main>
 </template>
 
@@ -27,7 +28,8 @@ const routeName = computed(() => route.name);
 <style lang="scss" scoped>
 main {
     display: grid;
-    grid-template-columns: 300px 1fr;
+    grid-template-columns: 400px 1fr;
+    gap: 0 100px;
     width: 80%;
     height: 100%;
     margin: 100px auto 0;
@@ -44,22 +46,34 @@ main {
         ul {
 
             li {
-                width: 150px;
+                width: 100%;
+                border-radius: 20px;
                 display: flex;
+                transform: translateX(-30px);
+                transition: background 150ms ease;
 
                 a {
                     width: 100%;
+                    padding: 30px 0;
                     font-weight: 300;
                     font-size: 1.25rem;
                     color: #000;
-                    padding: 20px 0;
                     opacity: 0.35;
+                    padding-left: 30px;
                     transition: opacity 150ms ease;
                 }
 
                 a.router-link-active {
                     opacity: 1.0;
                 }
+            }
+
+            li.current-tab {
+                background-color: rgba(200, 200, 200, 0.1);
+            }
+
+            li:not(:last-child) {
+                margin-bottom: 15px;
             }
         }
     }

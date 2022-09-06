@@ -1,5 +1,5 @@
 <template>
-    <SiteHeader />
+    <h1>Trying This</h1>
 </template>
 
 <script lang="ts">
