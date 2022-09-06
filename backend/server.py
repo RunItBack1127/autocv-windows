@@ -34,10 +34,28 @@ CORS(app, resources={r'/*': {'origins': '*'}})
 word = comtypes.client.CreateObject('Word.Application')
 word.Visible = HEADLESS_WORD_MODE
 
+"""
+    GET endpoint for populating the resume template,
+    with options for modifying the languages and
+    toggling the bottom skill between microservices
+    and databases
+
+    RETURNS the link to the generated resume PDF
+    as retrieved from the GitHub REST API
+"""
 @app.route('/resume', methods=['GET'])
 def generate_resume():
     return None
 
+"""
+    GET endpoint for populating the cover letter
+    template with options for modifying the name of
+    the hiring manager, the name of the role, and
+    the company name
+
+    RETURNS the link to the generated cover letter
+    PDF  as retrieved from the GitHub REST API
+"""
 @app.route('/cv', methods=['GET'])
 def generate_cover_letter():
     return None
