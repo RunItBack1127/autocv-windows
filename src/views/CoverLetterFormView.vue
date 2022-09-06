@@ -4,7 +4,7 @@
         <BasicFormInput title="Company Name" placeholder="Cruise, LLC" v-model="companyName" />
         <div class="customRecruiterContainer">
             <label for="customRecruiterCheckbox">Use custom recruiter name?</label>
-            <input type="checkbox" v-model="useCustomRecruiterName" />
+            <input tabindex="-1" type="checkbox" v-model="useCustomRecruiterName" />
         </div>
         <BasicFormInput
             title="Recruiter Name"
