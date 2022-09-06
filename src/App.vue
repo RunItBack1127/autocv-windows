@@ -1,18 +1,30 @@
 <template>
-    
+    <SiteHeader />
 </template>
 
 <script setup lang="ts">
+import SiteHeader from '@/components/SiteHeader.vue';
 
 </script>
 
 <style lang="scss">
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 body {
-    font-family: "Roboto", sans-serif;
+    font-family: var(--site-font);
     font-size: 16px;
+
+    --site-font: "Roboto", sans-serif;
 }
 
 a {
+    font-family: var(--site-font);
     display: block;
     text-decoration: none;
 }
