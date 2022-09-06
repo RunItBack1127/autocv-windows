@@ -51,7 +51,7 @@ header {
                     width: 20px;
                     height: 20px;
                     fill: #fff;
-                    margin-right: 30px;
+                    margin-right: 40px;
                 }
 
                 p {
@@ -59,6 +59,10 @@ header {
                     color: #fff;
                 }
             }
+        }
+
+        a:hover {
+            opacity: 0.9;
         }
     }
 }
