@@ -14,7 +14,11 @@ body {
 }
 
 a {
-    font-family: var(--site-font);
     display: block;
+    font-family: var(--site-font);
     text-decoration: none;
+}
+
+ul {
+    list-style: none;
 }
