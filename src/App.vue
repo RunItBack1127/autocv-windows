@@ -30,10 +30,9 @@ main {
     grid-template-columns: 300px 1fr;
     width: 80%;
     height: 100%;
-    margin: auto;
+    margin: 100px auto 0;
 
     aside {
-        margin-top: 100px;
         width: 100%;
         height: 100%;
 
