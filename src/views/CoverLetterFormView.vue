@@ -1,5 +1,5 @@
 <template>
-    <form>
+    <form @submit.prevent="onSubmit">
         <BasicFormInput title="Name of Role" placeholder="Software Engineer" v-model="nameOfRole" />
         <BasicFormInput title="Company Name" placeholder="Cruise, LLC" v-model="companyName" />
         <div class="customRecruiterContainer">
@@ -11,26 +11,37 @@
             placeholder="Corporate Recruiter"
             v-model="recruiterName"
             :disabled="!useCustomRecruiterName" />
-        <SubmitClearMenu />
+        <SubmitResetMenu @reset-form-fields="resetFormFields" />
     </form>
 </template>
 
 <script lang="ts">
 import BasicFormInput from '@/components/BasicFormInput.vue';
-import SubmitClearMenu from '../components/SubmitClearMenu.vue';
+import SubmitResetMenu from '../components/SubmitResetMenu.vue';
 import { defineComponent } from 'vue';
 
 export default defineComponent({
     components: {
-    BasicFormInput,
-    SubmitClearMenu
-},
+        BasicFormInput,
+        SubmitResetMenu
+    },
     data() {
         return {
             nameOfRole: '',
             companyName: '',
             recruiterName: '',
             useCustomRecruiterName: false
+        }
+    },
+    methods: {
+        onSubmit(e: Event) {
+            e.preventDefault();
+        },
+        resetFormFields() {
+            this.nameOfRole = "";
+            this.companyName = "";
+            this.recruiterName = "";
+            this.useCustomRecruiterName = false;
         }
     }
 })
