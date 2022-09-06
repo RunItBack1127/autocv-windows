@@ -34,7 +34,8 @@ CORS(app, resources={r'/*': {'origins': '*'}})
 word = comtypes.client.CreateObject('Word.Application')
 word.Visible = HEADLESS_WORD_MODE
 
-@app.route('/resume', methods=['GET']):
+@app.route('/resume', methods=['GET'])
+def generate_resume():
     return None
 
 @app.route('/cv', methods=['GET'])
