@@ -23,6 +23,7 @@ section {
     justify-content: center;
     align-items: flex-start;
     width: 100%;
+    margin-bottom: 40px;
 
     label {
         font-size: 1.3rem;
@@ -41,10 +42,6 @@ section {
     input::placeholder {
         opacity: 0.35;
     }
-}
-
-section:not(:last-child) {
-    margin-bottom: 40px;
 }
 
 section.disabled {

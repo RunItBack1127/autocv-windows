@@ -32,7 +32,7 @@ main {
     gap: 0 100px;
     width: 80%;
     height: 100%;
-    margin: 100px auto 0;
+    margin: 75px auto 0;
 
     aside {
         width: 100%;
