@@ -5,7 +5,7 @@
             <h1>Choose Category</h1>
             <ul>
                 <li :class="routeName === 'Resume' ? 'current-tab' : ''">
-                    <router-link to="/resume">Resume</router-link>
+                    <router-link to="/resume">Resum&#x00e9</router-link>
                 </li>
                 <li :class="routeName === 'Cover Letter' ? 'current-tab' : ''">
                     <router-link to="/cv">Cover Letter</router-link>
