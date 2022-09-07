@@ -24,7 +24,7 @@
                 <input @click.self="setCompetency('Databases')" :class="competency === 'Databases' ? 'current-selection' : ''" type="button" value="Databases" />
             </div>
         </div>
-        <SubmitResetMenu />
+        <SubmitResetMenu @reset-form-fields="resetFormFields" />
     </form>
 </template>
 
@@ -58,13 +58,14 @@ export default defineComponent({
                 store.state.resume.relevantSkills = store.state.resume.relevantSkills.filter((sk) => {
                     return sk !== skill;
                 });
+            },
+            onSubmit: (e: Event) => {
+                e.preventDefault();
+            },
+            resetFormFields: () => {
+                store.state.resume.relevantSkills = [];
+                store.state.resume.competency = 'Microservices';
             }
-        }
-    },
-    methods: {
-        onSubmit(e: Event) {
-            e.preventDefault();
-            console.log("Submitted from resume form view");
         }
     }
 });
