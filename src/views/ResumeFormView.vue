@@ -5,7 +5,17 @@
                 <label for="skillsDashboardInput">Update Relevant Skills</label>
                 <p>Add up to 6 technologies.</p>
             </header>
-            <SkillsDashboard :skills="skills" @add-skill="(skill: string) => addSkill(skill)" />
+            <SkillsDashboard
+                :skills="skills"
+                :disabled="skills.length === 6"
+                @modify-skill="(payload) => {
+                    if( payload.method === 'REMOVE' ) {
+                        removeSkill(payload.skill);
+                    }
+                    else {
+                        addSkill(payload.skill);
+                    }
+                }" />
         </div>
         <div className="competenciesToggleContainer">
             <h1>Select Competency</h1>
@@ -40,19 +50,20 @@ export default defineComponent({
             console.log(competency);
         },
         addSkill(skill: string) {
-
+            if( !this.skills.includes(skill) ) {
+                this.skills.push(skill);
+            }
+        },
+        removeSkill(skill: String) {
+            console.log("Removing");
+            this.skills = this.skills.filter((sk) => {
+                return sk !== skill
+            });
         }
     },
     data() {
         return {
-            skills: [
-                "Vue",
-                "Node.js",
-                "Typescript",
-                "Java",
-                "HTML5/CSS3",
-                "Three.js"
-            ],
+            skills: [],
             competencySelection: 'Microservices'
         }
     }

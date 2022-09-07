@@ -1,9 +1,10 @@
 <template>
     <section>
-        <input type="text" />
+        <input :disabled="disabled === true" @keypress.self="(e) => processInput(e)" type="text" />
         <div className="skillBubbleContainer">
             <SkillBubble
-                @remove-skill="(skill) => skills = skills.filter((sk) => sk !== skill)"
+                :key="skill"
+                @modify-skill="(payload) => $emit('modifySkill', payload)"
                 v-for="skill in skills"
                 :name="skill" />
         </div>
@@ -19,7 +20,22 @@ export default defineComponent({
         SkillBubble
     },
     props: {
-        skills: []
+        skills: [],
+        disabled: Boolean
+    },
+    methods: {
+        processInput(e: KeyboardEvent) {
+            if( e.key === "Enter" ) {
+                e.preventDefault();
+                if( e.target.value !== "" ) {
+                    this.$emit( "modifySkill", {
+                        method: 'ADD',
+                        skill: e.target.value
+                    } );
+                }
+                e.target.value = "";
+            }
+        }
     }
 });
 </script>
@@ -33,6 +49,10 @@ section {
         border: 1px solid rgba(0, 0, 0, 0.5);
         border-radius: 10px;
         margin-bottom: 40px;
+    }
+
+    input:disabled {
+        opacity: 0.25;
     }
 
     .skillBubbleContainer {
