@@ -5,7 +5,7 @@
                 <label for="skillsDashboardInput">Update Relevant Skills</label>
                 <p>Add up to 6 technologies.</p>
             </header>
-            <SkillsDashboard @add-skill="(skill: string) => addSkill(skill)" />
+            <SkillsDashboard :skills="skills" @add-skill="(skill: string) => addSkill(skill)" />
         </div>
         <div className="competenciesToggleContainer">
             <h1>Select Competency</h1>
@@ -26,10 +26,10 @@ import SubmitResetMenu from '../components/SubmitResetMenu.vue';
 
 export default defineComponent({
     components: {
-    SiteHeader,
-    SkillsDashboard,
-    SubmitResetMenu
-},
+        SiteHeader,
+        SkillsDashboard,
+        SubmitResetMenu
+    },
     methods: {
         onSubmit(e: Event) {
             e.preventDefault();
@@ -45,7 +45,14 @@ export default defineComponent({
     },
     data() {
         return {
-            skills: [],
+            skills: [
+                "Vue",
+                "Node.js",
+                "Typescript",
+                "Java",
+                "HTML5/CSS3",
+                "Three.js"
+            ],
             competencySelection: 'Microservices'
         }
     }
@@ -64,7 +71,7 @@ form {
             p {
                 font-size: 1.25rem;
                 font-weight: 300;
-                margin: 5px 0 50px;
+                margin: 5px 0 40px;
                 opacity: 0.35;
             }
         }
