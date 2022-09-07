@@ -20,8 +20,8 @@
         <div className="competenciesToggleContainer">
             <h1>Select Competency</h1>
             <div className="competenciesToggleInner">
-                <input @click.self="setCompetency('Microservices')" :class="competencySelection === 'Microservices' ? 'current-selection' : ''" type="button" value="Microservices" />
-                <input @click.self="setCompetency('Databases')" :class="competencySelection === 'Databases' ? 'current-selection' : ''" type="button" value="Databases" />
+                <input @click.self="setCompetency('Microservices')" :class="competency === 'Microservices' ? 'current-selection' : ''" type="button" value="Microservices" />
+                <input @click.self="setCompetency('Databases')" :class="competency === 'Databases' ? 'current-selection' : ''" type="button" value="Databases" />
             </div>
         </div>
         <SubmitResetMenu />
@@ -30,7 +30,9 @@
 
 <script lang="ts">
 import SiteHeader from '@/components/SiteHeader.vue';
+import { computed } from '@vue/reactivity';
 import { defineComponent } from 'vue';
+import { useStore } from 'vuex';
 import SkillsDashboard from '../components/SkillsDashboard.vue';
 import SubmitResetMenu from '../components/SubmitResetMenu.vue';
 
@@ -40,31 +42,29 @@ export default defineComponent({
         SkillsDashboard,
         SubmitResetMenu
     },
+    setup() {
+        const store = useStore();
+
+        return {
+            skills: computed(() => store.state.resume.relevantSkills),
+            competency: computed(() => store.state.resume.competency),
+            setCompetency: (competency: string) => store.state.resume.competency = competency,
+            addSkill: (skill: string) => {
+                if(!store.state.resume.relevantSkills.includes(skill)) {
+                    store.state.resume.relevantSkills.push(skill);
+                }
+            },
+            removeSkill: (skill: string) => {
+                store.state.resume.relevantSkills = store.state.resume.relevantSkills.filter((sk) => {
+                    return sk !== skill;
+                });
+            }
+        }
+    },
     methods: {
         onSubmit(e: Event) {
             e.preventDefault();
             console.log("Submitted from resume form view");
-        },
-        setCompetency(competency: string) {
-            this.competencySelection = competency;
-            console.log(competency);
-        },
-        addSkill(skill: string) {
-            if( !this.skills.includes(skill) ) {
-                this.skills.push(skill);
-            }
-        },
-        removeSkill(skill: String) {
-            console.log("Removing");
-            this.skills = this.skills.filter((sk) => {
-                return sk !== skill
-            });
-        }
-    },
-    data() {
-        return {
-            skills: [],
-            competencySelection: 'Microservices'
         }
     }
 });
