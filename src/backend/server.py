@@ -11,6 +11,7 @@ import comtypes
 import comtypes.client
 import os
 import uuid
+import zipfile
 
 HEADLESS_WORD_MODE = 1
 PDF_SAVE_MODE = 17
@@ -19,9 +20,13 @@ RESUME_CV_FONT_NAME = "Radian Book"
 RESUME_CV_FONT_SIZE = 12
 
 # Define paths for all application roles
-SOFTWARE_ENGINEER_PATH__RESUME = "templates/resume/WPG_Software_Engineer.docx"
-FRONT_END_ENGINEER_PATH__RESUME = "templates/resume/WPG_Front_End_Engineer.docx"
-FULL_STACK_ENGINEER_PATH__RESUME = "templates/resume/WPG_Full_Stack_Engineer.docx"
+SOFTWARE_ENGINEER_PATH__MICROSERVIES_RESUME = "templates/resume/microservices/WPG_Software_Engineer.docx.zip"
+FRONT_END_ENGINEER_PATH__MICROSERVICES_RESUME = "templates/resume/microservices/WPG_Front_End_Engineer.docx.zip"
+FULL_STACK_ENGINEER_PATH__MICROSERVICES_RESUME = "templates/resume/microservices/WPG_Full_Stack_Engineer.docx.zip"
+
+SOFTWARE_ENGINEER_PATH__MICROSERVIES_GENERATED_RESUME = "templates/resume/microservices/generated/WPG_Software_Engineer.docx.zip"
+FRONT_END_ENGINEER_PATH__MICROSERVICES_GENERATED_RESUME = "templates/resume/microservices/generated/WPG_Front_End_Engineer.docx.zip"
+FULL_STACK_ENGINEER_PATH__MICROSERVICES_GENERATED_RESUME = "templates/resume/microservices/generated/WPG_Full_Stack_Engineer.docx.zip"
 
 SOFTWARE_ENGINEER_PATH__COVER_LETTER = "templates/cover_letter/WPG_Software_Engineer.docx"
 FRONT_END_ENGINEER_PATH__COVER_LETTER = "templates/cover_letter/WPG_Front_End_Engineer.docx"
@@ -52,7 +57,73 @@ repo = github.get_user().get_repo("autocv-cover-letters")
 """
 @app.route('/resume', methods=['GET'])
 def generate_resume():
-    return None
+    input_filename = ""
+    output_filename = ""
+
+    applicant_role = request.args["applicantRole"]
+    competency = request.args["competency"]
+
+    if applicant_role == "Software Engineer":
+        if competency == "Microservices":
+            input_filename = SOFTWARE_ENGINEER_PATH__RESUME
+            output_filename = SOFTWARE_ENGINEER_PATH__MICROSERVICES_GENERATED_RESUME
+        elif competency == "Databases":
+            input_filename = SOFTWARE_ENGINEER_PATH__MICROSERVICES_RESUME
+            output_filename = SOFTWARE_ENGINEER_PATH__MICROSERVICES_GENERATED_RESUME
+    elif applicant_role == "Front End Engineer":
+        if competency == "Microservices":
+            input_filename = FRONT_END_ENGINEER_PATH__RESUME
+            output_filename = FRONT_END_ENGINEER_PATH__MICROSERVICES_GENERATED_RESUME
+        elif competency == "Databases":
+            input_filename = FRONT_END_ENGINEER_PATH__MICROSERVICES_RESUME
+            output_filename = FRONT_END_ENGINEER_PATH__MICROSERVICES_GENERATED_RESUME
+    elif applicant_role == "Full Stack Engineer":
+        if competency == "Microservices":
+            input_filename = FULL_STACK_ENGINEER_PATH__RESUME
+            output_filename = FULL_STACK_ENGINEER_PATH__MICROSERVICES_GENERATED_RESUME
+        elif competency == "Databases":
+            input_filename = FULL_STACK_ENGINEER_PATH__MICROSERVICES_RESUME
+            output_filename = FULL_STACK_ENGINEER_PATH__MICROSERVICES_GENERATED_RESUME
+
+    with zipfile.ZipFile(input_filename, "r") as input_doc, zipfile.ZipFile(output_filename, "w") as output_doc:
+        for input_doc_info in input_doc.infolist():
+            with input_doc.open(input_doc_info) as input_doc_file:
+                content = input_doc_file.read()
+                if input_doc_info.filename == "document.xml":
+
+                    relevantSkills = request.args["relevantSkills"].split(",")
+                    for (skill_index, skill) in enumerate(relevantSkills):
+                        content.replace(f"{{{{L{skill_index + 1}}}}}", skill)
+
+                    output_doc.writestr(f"word/{input_doc_info.filename}", content)
+                else:
+                    output_doc.writeStr(input_doc_info.filename, content)
+    
+    output_doc_renamed = output_filename[:-4]
+    pdf_filename = output_doc_renamed.replace(".docx", ".pdf")
+    os.rename(output_filename, output_doc_renamed)
+
+    comtypes.CoInitialize()
+
+    word = comtypes.client.CreateObject('Word.Application')
+    word.Visible = False
+
+    doc = word.Documents.Open(get_abs_path(output_doc_renamed))
+    doc.SaveAs(get_abs_path(pdf_filename), FileFormat=PDF_SAVE_MODE)
+    doc.Close()
+
+    word.Quit()
+
+    comtypes.CoUninitialize()
+
+    github_pdf_path = f"Weston_P_Greene_Resume_{uuid.uuid4()}.pdf"
+    pdf_contents = open(pdf_filename, "rb").read()
+    github_response = repo.create_file(github_pdf_path, "Appending generated resume file", pdf_contents, branch="master")
+
+    os.remove(output_doc_renamed)
+    os.remove(pdf_filename)
+
+    return jsonify(pdf=github_response['content'].download_url)
 
 """
     GET endpoint for populating the cover letter
