@@ -49,6 +49,7 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 form {
+
     .customRecruiterContainer {
         display: flex;
         justify-content: flex-end;

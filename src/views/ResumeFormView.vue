@@ -61,6 +61,7 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 form {
+
     .skillsDashboardContainer {
         header {
             label {
@@ -78,7 +79,7 @@ form {
     }
 
     .competenciesToggleContainer {
-        margin-bottom: 60px;
+        margin-bottom: 100px;
 
         h1 {
             margin-bottom: 20px;
@@ -101,8 +102,6 @@ form {
             }
 
             input[type="button"].current-selection {
-                background: #000;
-                color: #fff;
                 opacity: 1.0;
             }
         }

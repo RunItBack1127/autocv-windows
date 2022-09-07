@@ -22,10 +22,11 @@ footer {
     display: flex;
     justify-content: flex-end;
     align-items: center;
+    margin-bottom: 40px;
 
     input {
-        padding: 20px 50px;
-        font-size: 1rem;
+        padding: 30px 80px;
+        font-size: 1.2rem;
         border-radius: 10px;
         border: 1px solid #000;
         text-transform: uppercase;
