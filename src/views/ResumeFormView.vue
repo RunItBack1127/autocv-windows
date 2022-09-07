@@ -82,7 +82,7 @@ form {
         margin-bottom: 100px;
 
         h1 {
-            margin-bottom: 20px;
+            margin-bottom: 25px;
         }
 
         .competenciesToggleInner {
