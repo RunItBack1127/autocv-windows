@@ -110,10 +110,11 @@ main {
                 button {
                     opacity: 1.0;
                     pointer-events: unset;
+                    transition: opacity 250ms ease;
                 }
 
                 button:hover {
-                    opacity: 0.25;
+                    opacity: 0.35;
                 }
             }
 
