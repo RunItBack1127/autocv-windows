@@ -33,6 +33,7 @@ main {
     width: 80%;
     height: 100%;
     margin: 75px auto 0;
+    max-width: 1200px;
 
     aside {
         width: 100%;
