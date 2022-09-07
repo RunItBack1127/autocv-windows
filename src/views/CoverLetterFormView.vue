@@ -20,7 +20,7 @@ import BasicFormInput from '@/components/BasicFormInput.vue';
 import SubmitResetMenu from '../components/SubmitResetMenu.vue';
 import { defineComponent } from 'vue';
 import { useStore } from 'vuex';
-import { computed } from '@vue/reactivity';
+import axios from 'axios';
 
 export default defineComponent({
     components: {
@@ -43,6 +43,17 @@ export default defineComponent({
             },
             onSubmit: (e: Event) => {
                 e.preventDefault();
+
+                axios.get("http://localhost:5000/cv", {
+                    params: {
+                        recruiterName: this.recruiterName,
+                        companyName: this.companyName,
+                        nameOfRole: this.nameOfRole,
+                        applicantRole: store.state.settings.applicantRole
+                    }
+                }).then((response) => {
+                    window.open(response.data.pdf);
+                });
             },
             resetFormFields: () => {
                 this.nameOfRole = "";
