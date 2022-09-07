@@ -25,7 +25,7 @@ footer {
 
     input {
         padding: 20px 50px;
-        font-size: 1.1rem;
+        font-size: 1rem;
         border-radius: 10px;
         border: 1px solid #000;
         text-transform: uppercase;
@@ -36,11 +36,11 @@ footer {
     input[type="submit"] {
         background-color: #000;
         color: #fff;
-        opacity: 0.8;
+        opacity: 1.0;
     }
 
     input[type="submit"]:hover {
-        opacity: 1.0;
+        opacity: 0.8;
     }
 
     input[type="button"] {
