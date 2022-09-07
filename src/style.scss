@@ -25,5 +25,6 @@ ul {
 
 button,
 input[type="button"] {
+    font-family: var(--site-font);
     cursor: pointer;
 }

@@ -10,6 +10,9 @@
                 <li :class="routeName === 'Cover Letter' ? 'current-tab' : ''">
                     <router-link to="/cv">Cover Letter</router-link>
                 </li>
+                <li class="settings-tab" :class="routeName === 'Settings' ? 'current-tab' : ''">
+                    <router-link to="/settings">Settings</router-link>
+                </li>
             </ul>
         </aside>
         <router-view></router-view>
@@ -53,7 +56,8 @@ main {
                 transform: translateX(-30px);
                 transition: background 150ms ease;
 
-                a {
+                a,
+                button {
                     width: 100%;
                     padding: 30px 0;
                     font-weight: 300;
@@ -61,12 +65,20 @@ main {
                     color: #000;
                     opacity: 0.35;
                     padding-left: 30px;
+                    background: transparent;
+                    text-align: left;
+                    border: none;
                     transition: opacity 150ms ease;
                 }
 
                 a.router-link-active {
                     opacity: 1.0;
                 }
+            }
+
+            li.settings-tab {
+                position: relative;
+                top: 100px;
             }
 
             li.current-tab {

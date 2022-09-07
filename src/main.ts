@@ -5,6 +5,7 @@ import '@/style.scss';
 
 import ResumeFormView from '@/views/ResumeFormView.vue';
 import CoverLetterFormView from '@/views/CoverLetterFormView.vue';
+import SettingsView from '@/views/SettingsView.vue';
 
 const router = createRouter({
     history: createWebHistory(),
@@ -26,6 +27,11 @@ const router = createRouter({
             path: '/cv',
             name: 'Cover Letter',
             component: CoverLetterFormView
+        },
+        {
+            path: '/settings',
+            name: 'Settings',
+            component: SettingsView
         }
     ]
 });
