@@ -38,7 +38,7 @@ def get_abs_path(filename):
 app = Flask(__name__)
 CORS(app, resources={r'/*': {'origins': '*'}})
 
-github = Github("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")
+github = Github("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")
 repo = github.get_user().get_repo("autocv-cover-letters")
 
 """

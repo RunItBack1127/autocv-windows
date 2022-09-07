@@ -97,7 +97,7 @@ article {
     }
 
     section.applicantRoleContainer {
-        margin-bottom: 85px;
+        margin-bottom: 100px;
 
         .applicantRoleInner {
             grid-template-columns: 1fr 1fr;

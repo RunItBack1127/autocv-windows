@@ -42,7 +42,7 @@ span {
         position: absolute;
         background: transparent;
         border: none;
-        margin-left: 10%;
+        margin-left: 7%;
 
         svg {
             width: 20px;

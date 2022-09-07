@@ -3,11 +3,11 @@
         <div class="skillsDashboardContainer">
             <header>
                 <label for="skillsDashboardInput">Update Relevant Skills</label>
-                <p>Add up to 6 technologies.</p>
+                <p>Add up to 7 technologies.</p>
             </header>
             <SkillsDashboard
                 :skills="skills"
-                :disabled="skills.length === 6"
+                :disabled="skills.length === 7"
                 @modify-skill="(payload) => {
                     if( payload.method === 'REMOVE' ) {
                         removeSkill(payload.skill);
