@@ -3,7 +3,7 @@
         <div class="skillsDashboardContainer">
             <header>
                 <label for="skillsDashboardInput">Update Relevant Skills</label>
-                <p>Add up to 7 technologies.</p>
+                <p>Add 7 relevant technologies.</p>
             </header>
             <SkillsDashboard
                 :skills="skills"
