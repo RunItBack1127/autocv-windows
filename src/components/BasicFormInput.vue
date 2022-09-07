@@ -1,10 +1,12 @@
 <template>
     <section :class="disabled === true ? 'disabled' : ''">
-        <label>{{ title }}</label>
+        <div class="titleContainer">
+            <label>{{ title }}</label>
+            <p>{{ 'e.g. ' + subText }}</p>
+        </div>
         <input
             :value="modelValue"
             @input="$emit('update:modelValue', $event.target?.value)"
-            :placeholder="placeholder"
             :disabled="disabled === true"
             type="text" />
     </section>
@@ -12,7 +14,7 @@
 
 <script lang="ts">
 export default {
-    props: ['title', 'placeholder', 'disabled', 'modelValue']
+    props: ['title', 'subText', 'disabled', 'modelValue']
 }
 </script>
 
@@ -23,12 +25,21 @@ section {
     justify-content: center;
     align-items: flex-start;
     width: 100%;
-    margin-bottom: 40px;
+    margin-bottom: 70px;
 
-    label {
-        font-size: 1.3rem;
-        font-weight: 500;
-        margin-bottom: 20px;
+    .titleContainer {
+
+        label {
+            font-size: 2rem;
+            font-weight: 700;
+        }
+
+        p {
+            font-size: 1.25rem;
+            font-weight: 300;
+            opacity: 0.25;
+            margin: 5px 0 20px;
+        }
     }
 
     input {

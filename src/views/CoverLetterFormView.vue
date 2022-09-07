@@ -1,14 +1,14 @@
 <template>
     <form @submit.prevent="onSubmit">
-        <BasicFormInput title="Name of Role" placeholder="Software Engineer" v-model="nameOfRole" />
-        <BasicFormInput title="Company Name" placeholder="Cruise, LLC" v-model="companyName" />
+        <BasicFormInput title="Name of Role" subText="Software Engineer" v-model="nameOfRole" />
+        <BasicFormInput title="Company Name" subText="Cruise, LLC" v-model="companyName" />
         <div class="customRecruiterContainer">
             <label for="customRecruiterCheckbox">Use custom recruiter name?</label>
             <input tabindex="-1" type="checkbox" v-model="useCustomRecruiterName" />
         </div>
         <BasicFormInput
             title="Recruiter Name"
-            placeholder="Corporate Recruiter"
+            subText="Bryan Danielson"
             v-model="recruiterName"
             :disabled="!useCustomRecruiterName" />
         <SubmitResetMenu @reset-form-fields="resetFormFields" />
@@ -58,7 +58,7 @@ form {
 
         label {
             font-size: 1.1rem;
-            font-weight: 500;
+            font-weight: 300;
             margin-right: 15px;
             opacity: 0.9;
         }
