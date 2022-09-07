@@ -22,19 +22,40 @@
         </aside>
         <router-view></router-view>
     </main>
+    <footer :class="showSuccessCopyDialog === true ? 'show-dialog' : ''" class="copy-dialog success">
+        <p>Successfully copied cover letter contents to clipboard.</p>
+    </footer>
+    <footer :class="showFailCopyDialog === true ? 'show-dialog' : ''" class="copy-dialog fail">
+        <p>Error occurred while copying cover letter contents to clipboard.</p>
+    </footer>
 </template>
 
-<script setup lang="ts">
+<script lang="ts">
 import SiteHeader from '@/components/SiteHeader.vue';
 import { computed } from '@vue/reactivity';
+import { defineComponent } from 'vue';
 import { useRoute } from 'vue-router';
 
-const route = useRoute();
-const routeName = computed(() => route.name);
-
-function copyCoverLetter() {
-
-}
+export default defineComponent({
+    components: {
+        SiteHeader
+    },
+    methods: {
+        copyCoverLetter() {
+            this.showSuccessCopyDialog = true;
+            setTimeout(() => {
+                this.showSuccessCopyDialog = false;
+            }, 3000);
+        }
+    },
+    data() {
+        return {
+            routeName: computed(() => useRoute().name),
+            showSuccessCopyDialog: false,
+            showFailCopyDialog: false
+        }
+    }
+});
 </script>
 
 <style lang="scss" scoped>
@@ -127,5 +148,32 @@ main {
             }
         }
     }
+}
+
+footer.copy-dialog {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    margin: 0 auto;
+    bottom: 30px;
+    width: 100%;
+    transition: opacity 1000ms ease-in-out;
+    opacity: 0.0;
+
+    p {
+        text-align: center;
+        font-size: 1rem;
+        width: 60%;
+        max-width: 800px;
+        background-color: rgb(230, 230, 230);
+        padding: 30px 0;
+        border-radius: 15px;
+        color: #000;
+    }
+}
+
+footer.copy-dialog.show-dialog {
+    opacity: 1.0;
 }
 </style>
