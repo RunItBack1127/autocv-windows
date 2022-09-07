@@ -2,16 +2,16 @@
     <form @submit.prevent="onSubmit">
         <div class="skillsDashboardContainer">
             <header>
-                <label for="skillsDashboardInput"></label>
-                <p>Choose up to 6.</p>
+                <label for="skillsDashboardInput">Update Relevant Skills</label>
+                <p>Add up to 6 technologies.</p>
             </header>
             <SkillsDashboard @add-skill="(skill: string) => addSkill(skill)" />
         </div>
         <div className="competenciesToggleContainer">
             <h1>Select Competency</h1>
             <div className="competenciesToggleInner">
-                <input type="button" value="Microservices" />
-                <input type="button" value="Databases" />
+                <input @click.self="setCompetency('Microservices')" :class="competencySelection === 'Microservices' ? 'current-selection' : ''" type="button" value="Microservices" />
+                <input @click.self="setCompetency('Databases')" :class="competencySelection === 'Databases' ? 'current-selection' : ''" type="button" value="Databases" />
             </div>
         </div>
         <SubmitResetMenu />
@@ -35,18 +35,69 @@ export default defineComponent({
             e.preventDefault();
             console.log("Submitted from resume form view");
         },
+        setCompetency(competency: string) {
+            this.competencySelection = competency;
+            console.log(competency);
+        },
         addSkill(skill: string) {
 
         }
     },
     data() {
         return {
-            skills: []
+            skills: [],
+            competencySelection: 'Microservices'
         }
     }
 });
 </script>
 
 <style lang="scss" scoped>
+form {
+    .skillsDashboardContainer {
+        header {
+            label {
+                font-size: 2rem;
+                font-weight: 700;
+            }
 
+            p {
+                font-size: 1.25rem;
+                font-weight: 300;
+                margin: 5px 0 50px;
+                opacity: 0.35;
+            }
+        }
+    }
+
+    .competenciesToggleContainer {
+
+        h1 {
+            margin-bottom: 20px;
+        }
+
+        .competenciesToggleInner {
+            width: 100%;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0 50px;
+            
+            input[type="button"] {
+                font-size: 1.25rem;
+                padding: 25px 0;
+                border-radius: 10px;
+                border: 1px solid #000;
+                background: transparent;
+                transition: opacity 200ms ease;
+                opacity: 0.25;
+            }
+
+            input[type="button"].current-selection {
+                background: #000;
+                color: #fff;
+                opacity: 1.0;
+            }
+        }
+    }
+}
 </style>
