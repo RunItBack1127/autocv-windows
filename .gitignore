@@ -15,6 +15,10 @@ dist-ssr
 # Python virtual env files
 src/backend/venv
 
+# Ignore all generated PDF and DOCX files
+src/backend/templates/*/generated/*.pdf
+src/backend/templates/*/generated/*.docx
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
