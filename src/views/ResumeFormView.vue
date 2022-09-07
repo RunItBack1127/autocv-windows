@@ -78,6 +78,7 @@ form {
     }
 
     .competenciesToggleContainer {
+        margin-bottom: 60px;
 
         h1 {
             margin-bottom: 20px;

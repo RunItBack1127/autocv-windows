@@ -3,6 +3,7 @@
         <input type="text" />
         <div className="skillBubbleContainer">
             <SkillBubble
+                @remove-skill="(skill) => skills = skills.filter((sk) => sk !== skill)"
                 v-for="skill in skills"
                 :name="skill" />
         </div>
@@ -18,7 +19,7 @@ export default defineComponent({
         SkillBubble
     },
     props: {
-        skills: Array<String>
+        skills: []
     }
 });
 </script>
@@ -27,19 +28,20 @@ export default defineComponent({
 section {
     input {
         width: 100%;
-        max-width: 450px;
         font-size: 1.2rem;
         padding: 15px 20px;
         border: 1px solid rgba(0, 0, 0, 0.5);
         border-radius: 10px;
-        margin-bottom: 30px;
+        margin-bottom: 40px;
     }
 
     .skillBubbleContainer {
         width: 100%;
         display: grid;
         grid-template-columns: 1fr 1fr 1fr;
-        gap: 30px;
+        gap: 20px 30px;
+        height: 250px;
+        margin-bottom: 50px;
     }
 }
 </style>
