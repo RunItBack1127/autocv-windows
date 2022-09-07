@@ -33,7 +33,7 @@ const route = useRoute();
 const routeName = computed(() => route.name);
 
 function copyCoverLetter() {
-    
+
 }
 </script>
 
@@ -113,7 +113,7 @@ main {
                 }
 
                 button:hover {
-                    opacity: 0.5;
+                    opacity: 0.25;
                 }
             }
 
