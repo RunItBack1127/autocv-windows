@@ -122,6 +122,9 @@ def generate_cover_letter():
     pdf_contents = open(pdf_filename, "rb").read()
     github_response = repo.create_file(github_pdf_path, "Appending generated cover letter file", pdf_contents, branch="master")
 
+    os.remove(output_filename)
+    os.remove(pdf_filename)
+
     return jsonify(pdf=github_response['content'].download_url)
 
 if __name__ == '__main__':
