@@ -19,6 +19,8 @@
 import BasicFormInput from '@/components/BasicFormInput.vue';
 import SubmitResetMenu from '../components/SubmitResetMenu.vue';
 import { defineComponent } from 'vue';
+import { useStore } from 'vuex';
+import { computed } from '@vue/reactivity';
 
 export default defineComponent({
     components: {
@@ -26,23 +28,32 @@ export default defineComponent({
         SubmitResetMenu
     },
     data() {
+        const store = useStore();
+
         return {
-            nameOfRole: '',
-            companyName: '',
-            recruiterName: '',
-            useCustomRecruiterName: false
+            nameOfRole: store.state.coverLetter.nameOfRole,
+            companyName: store.state.coverLetter.companyName,
+            recruiterName: store.state.coverLetter.recruiterName,
+            useCustomRecruiterName: store.state.coverLetter.useCustomRecruiterName,
+            persistState: () => {
+                store.state.coverLetter.nameOfRole = this.nameOfRole;
+                store.state.coverLetter.companyName = this.companyName;
+                store.state.coverLetter.recruiterName = this.recruiterName;
+                store.state.coverLetter.useCustomRecruiterName = this.useCustomRecruiterName;
+            },
+            onSubmit: (e: Event) => {
+                e.preventDefault();
+            },
+            resetFormFields: () => {
+                this.nameOfRole = "";
+                this.companyName = "";
+                this.recruiterName = "";
+                this.useCustomRecruiterName = false;
+            }
         }
     },
-    methods: {
-        onSubmit(e: Event) {
-            e.preventDefault();
-        },
-        resetFormFields() {
-            this.nameOfRole = "";
-            this.companyName = "";
-            this.recruiterName = "";
-            this.useCustomRecruiterName = false;
-        }
+    beforeRouteLeave() {
+        this.persistState();
     }
 })
 </script>
