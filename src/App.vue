@@ -9,10 +9,14 @@
                 </li>
                 <li class="cv-tab" :class="routeName === 'Cover Letter' ? 'current-tab' : ''">
                     <router-link to="/cv">Cover Letter</router-link>
-                    <button @click="copyCoverLetter">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-save" viewBox="0 0 16 16">
+                    <button :disabled="showCopySuccess || loadingCopy" @click="copyCoverLetter">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" v-show="!showCopySuccess && !loadingCopy" viewBox="0 0 16 16">
                             <path d="M2 1a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H9.5a1 1 0 0 0-1 1v7.293l2.646-2.647a.5.5 0 0 1 .708.708l-3.5 3.5a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L7.5 9.293V2a2 2 0 0 1 2-2H14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h2.5a.5.5 0 0 1 0 1H2z"/>
                         </svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="#000" v-show="showCopySuccess && !loadingCopy" viewBox="0 0 16 16">
+                            <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/>
+                        </svg>
+                        <div v-show="loadingCopy" class="lds-dual-ring"></div>
                     </button>
                 </li>
                 <li class="settings-tab" :class="routeName === 'Settings' ? 'current-tab' : ''">
@@ -22,12 +26,6 @@
         </aside>
         <router-view></router-view>
     </main>
-    <footer :class="showSuccessCopyDialog === true ? 'show-dialog' : ''" class="copy-dialog success">
-        <p>Successfully copied cover letter contents to clipboard.</p>
-    </footer>
-    <footer :class="showFailCopyDialog === true ? 'show-dialog' : ''" class="copy-dialog fail">
-        <p>Error occurred while copying cover letter contents to clipboard.</p>
-    </footer>
 </template>
 
 <script lang="ts">
@@ -42,17 +40,23 @@ export default defineComponent({
     },
     methods: {
         copyCoverLetter() {
-            this.showSuccessCopyDialog = true;
+            this.loadingCopy = true;
             setTimeout(() => {
-                this.showSuccessCopyDialog = false;
-            }, 3000);
+                this.loadingCopy = false
+            }, 1000);
+            setTimeout(() => {
+                this.showCopySuccess = true
+            }, 1000);
+            setTimeout(() => {
+                this.showCopySuccess = false
+            }, 2000);
         }
     },
     data() {
         return {
             routeName: computed(() => useRoute().name),
-            showSuccessCopyDialog: false,
-            showFailCopyDialog: false
+            showCopySuccess: false,
+            loadingCopy: false
         }
     }
 });
@@ -113,8 +117,8 @@ main {
             li.cv-tab {
 
                 button {
-                    width: 20px;
-                    height: 20px;
+                    width: 25px;
+                    height: 25px;
                     position: relative;
                     margin: auto 0;
                     left: -50px;
@@ -123,6 +127,36 @@ main {
                     pointer-events: none;
                     border: none;
                     background: transparent;
+                }
+
+                .lds-dual-ring {
+                    display: inline-block;
+                    width: 20px;
+                    height: 20px;
+                }
+
+                .lds-dual-ring:after {
+                    content: " ";
+                    display: block;
+                    width: 16px;
+                    height: 16px;
+                    border-radius: 50%;
+                    border: 1px solid #fff;
+                    border-color: #000 transparent #000 transparent;
+                    animation: lds-dual-ring 0.5s linear infinite;
+                }
+
+                @keyframes lds-dual-ring {
+                    0% {
+                        transform: rotate(0deg);
+                    }
+                    100% {
+                        transform: rotate(360deg);
+                    }
+                }
+
+                button:disabled {
+                    cursor: none;
                 }
             }
 
@@ -134,7 +168,7 @@ main {
                     transition: opacity 250ms ease;
                 }
 
-                button:hover {
+                button:not(:disabled):hover {
                     opacity: 0.35;
                 }
             }
@@ -151,15 +185,13 @@ main {
 }
 
 footer.copy-dialog {
-    display: flex;
+    display: none;
     justify-content: center;
     align-items: center;
     position: fixed;
     margin: 0 auto;
     bottom: 30px;
     width: 100%;
-    transition: opacity 1000ms ease-in-out;
-    opacity: 0.0;
 
     p {
         text-align: center;
@@ -174,6 +206,6 @@ footer.copy-dialog {
 }
 
 footer.copy-dialog.show-dialog {
-    opacity: 1.0;
+    display: flex;
 }
 </style>
