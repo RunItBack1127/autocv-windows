@@ -46,7 +46,7 @@ export default defineComponent({
 
                 axios.get("http://localhost:5000/cv", {
                     params: {
-                        recruiterName: this.recruiterName,
+                        recruiterName: this.recruiterName === "" ? 'Corporate Recruiter' : this.recruiterName,
                         companyName: this.companyName,
                         nameOfRole: this.nameOfRole,
                         applicantRole: store.state.settings.applicantRole
