@@ -8,13 +8,13 @@
             <div class="applicantRoleInner">
                 <button
                     :class="applicantRole === 'Software Engineer' ? 'current-selection' : ''"
-                    @click="applicantRole = 'Software Engineer'">Software Engineer</button>
+                    @click="setApplicantRole('Software Engineer')">Software Engineer</button>
                 <button
                     :class="applicantRole === 'Front End Engineer' ? 'current-selection' : ''"
-                    @click="applicantRole = 'Front End Engineer'">Front End Engineer</button>
+                    @click="setApplicantRole('Front End Engineer')">Front End Engineer</button>
                 <button
                     :class="applicantRole === 'Full Stack Engineer' ? 'current-selection' : ''"
-                    @click="applicantRole = 'Full Stack Engineer'">Full Stack Engineer</button>
+                    @click="setApplicantRole('Full Stack Engineer')">Full Stack Engineer</button>
             </div>
         </section>
         <section class="avToggleContainer">
@@ -25,23 +25,31 @@
             <div className="avToggleInner">
                 <button
                     :class="coverLetterContent === 'Default' ? 'current-selection' : ''"
-                    @click.self="coverLetterContent = 'Default'">Default</button>
+                    @click.self="setCoverLetterContent('Default')">Default</button>
                 <button
                     :class="coverLetterContent === 'Self Driving' ? 'current-selection' : ''"
-                    @click.self="coverLetterContent = 'Self Driving'">Self Driving</button>
+                    @click.self="setCoverLetterContent('Self Driving')">Self Driving</button>
             </div>
         </section>
     </article>
 </template>
 
 <script lang="ts">
+import { computed } from '@vue/reactivity';
 import { defineComponent } from 'vue';
+import { useStore } from 'vuex';
+
+const store = useStore();
 
 export default defineComponent({
-    data() {
+    setup() {
+        const store = useStore();
+
         return {
-            applicantRole: 'Software Engineer',
-            coverLetterContent: 'Default'
+            applicantRole: computed(() => store.state.settings.applicantRole),
+            coverLetterContent: computed(() => store.state.settings.coverLetterContent),
+            setApplicantRole: (role: string) => store.state.settings.applicantRole = role,
+            setCoverLetterContent: (content: string) => store.state.settings.coverLetterContent = content
         }
     }
 })
