@@ -53,7 +53,8 @@ export default defineComponent({
                         recruiterName: this.recruiterName === "" ? 'Corporate Recruiter' : this.recruiterName,
                         companyName: this.companyName,
                         nameOfRole: this.nameOfRole,
-                        applicantRole: store.state.settings.applicantRole
+                        applicantRole: store.state.settings.applicantRole,
+                        coverLetterContent: store.state.settings.coverLetterContent
                     }
                 }).then((response) => {
                     window.open(response.data.pdf);
