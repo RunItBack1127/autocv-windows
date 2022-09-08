@@ -53,7 +53,8 @@ const store = createStore({
             settings: {
                 applicantRole: 'Software Engineer',
                 coverLetterContent: 'Default'
-            }
+            },
+            showLoadingScreen: true
         }
     },
     mutations: {

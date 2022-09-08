@@ -26,17 +26,20 @@
         </aside>
         <router-view></router-view>
     </main>
+    <LoadingScreen />
 </template>
 
 <script lang="ts">
 import SiteHeader from '@/components/SiteHeader.vue';
+import LoadingScreen from '@/components/LoadingScreen.vue';
 import { computed } from '@vue/reactivity';
 import { defineComponent } from 'vue';
 import { useRoute } from 'vue-router';
 
 export default defineComponent({
     components: {
-        SiteHeader
+        SiteHeader,
+        LoadingScreen
     },
     methods: {
         copyCoverLetter() {
