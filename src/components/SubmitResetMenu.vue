@@ -1,6 +1,6 @@
 <template>
     <footer>
-        <input type="submit" value="Submit" />
+        <input :disabled="disabled === true" type="submit" value="Submit" />
         <input type="button" value="Reset" @click="$emit('resetFormFields')" />
     </footer>
 </template>
@@ -13,6 +13,9 @@ export default defineComponent({
         onClear() {
             this.$emit("resetFormFields");
         }
+    },
+    props: {
+        disabled: Boolean
     }
 })
 </script>
@@ -38,6 +41,12 @@ footer {
         background-color: #000;
         color: #fff;
         opacity: 1.0;
+        transition: opacity 200ms ease;
+    }
+
+    input[type="submit"]:disabled {
+        pointer-events: none;
+        opacity: 0.25;
     }
 
     input[type="submit"]:hover {

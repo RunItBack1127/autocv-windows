@@ -24,7 +24,9 @@
                 <input @click.self="setCompetency('Databases')" :class="competency === 'Databases' ? 'current-selection' : ''" type="button" value="Databases" />
             </div>
         </div>
-        <SubmitResetMenu @reset-form-fields="resetFormFields" />
+        <SubmitResetMenu
+            :disabled="skills.length !== 7"
+            @reset-form-fields="resetFormFields" />
     </form>
 </template>
 

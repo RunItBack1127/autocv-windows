@@ -11,7 +11,9 @@
             subText="Bryan Danielson"
             v-model="recruiterName"
             :disabled="!useCustomRecruiterName" />
-        <SubmitResetMenu @reset-form-fields="resetFormFields" />
+        <SubmitResetMenu
+            :disabled="nameOfRole === '' || companyName === '' || (useCustomRecruiterName && recruiterName === '')"
+            @reset-form-fields="resetFormFields" />
     </form>
 </template>
 
