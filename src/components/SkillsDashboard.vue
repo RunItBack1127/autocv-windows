@@ -4,7 +4,7 @@
         <div className="skillBubbleContainer">
             <SkillBubble
                 :key="skill"
-                @modify-skill="(payload) => $emit('modifySkill', payload)"
+                @modify-skill="(payload: ModifySkillPayload) => $emit('modifySkill', payload)"
                 v-for="skill in skills"
                 :name="skill" />
         </div>
@@ -14,6 +14,8 @@
 <script lang="ts">
 import SkillBubble from '@/components/SkillBubble.vue';
 import { defineComponent } from 'vue';
+import type { ModifySkillPayload } from '@/util/ModifySkillPayload';
+import { ModifySkillMethod } from '@/util/ModifySkillPayload';
 
 export default defineComponent({
     components: {
@@ -29,7 +31,7 @@ export default defineComponent({
                 e.preventDefault();
                 if( e.target.value !== "" ) {
                     this.$emit( "modifySkill", {
-                        method: 'ADD',
+                        method: ModifySkillMethod.ADD,
                         skill: e.target.value
                     } );
                 }

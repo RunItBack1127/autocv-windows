@@ -54,13 +54,8 @@ const store = createStore({
                 applicantRole: 'Software Engineer',
                 coverLetterContent: 'Default'
             },
-            showLoadingScreen: false
-        }
-    },
-    mutations: {
-        updateSettings(state, payload) {
-            state.settings.applicantRole = payload.applicantRole;
-            state.settings.coverLetterContent = payload.coverLetterContent;
+            showLoadingScreen: false,
+            bodyOverflow: 'auto'
         }
     }
 });

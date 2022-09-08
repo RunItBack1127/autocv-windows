@@ -8,7 +8,7 @@
             <SkillsDashboard
                 :skills="skills"
                 :disabled="skills.length === 7"
-                @modify-skill="(payload) => {
+                @modify-skill="(payload: ModifySkillPayload) => {
                     if( payload.method === 'REMOVE' ) {
                         removeSkill(payload.skill);
                     }
@@ -32,12 +32,13 @@
 
 <script lang="ts">
 import SiteHeader from '@/components/SiteHeader.vue';
+import SkillsDashboard from '@/components/SkillsDashboard.vue';
+import SubmitResetMenu from '@/components/SubmitResetMenu.vue';
+import { ModifySkillPayload, ModifySkillMethod } from '@/util/ModifySkillPayload';
 import { computed } from '@vue/reactivity';
 import { defineComponent } from 'vue';
 import { useStore } from 'vuex';
 import axios from 'axios';
-import SkillsDashboard from '../components/SkillsDashboard.vue';
-import SubmitResetMenu from '../components/SubmitResetMenu.vue';
 
 export default defineComponent({
     components: {
@@ -45,7 +46,7 @@ export default defineComponent({
         SkillsDashboard,
         SubmitResetMenu
     },
-    setup() {
+    data() {
         const store = useStore();
 
         return {
@@ -58,14 +59,14 @@ export default defineComponent({
                 }
             },
             removeSkill: (skill: string) => {
-                store.state.resume.relevantSkills = store.state.resume.relevantSkills.filter((sk) => {
+                store.state.resume.relevantSkills = store.state.resume.relevantSkills.filter((sk: string) => {
                     return sk !== skill;
                 });
             },
             onSubmit: (e: Event) => {
                 e.preventDefault();
                 store.state.showLoadingScreen = true;
-                document.querySelector("body").style.overflow = "hidden";
+                store.state.bodyOverflow = "hidden";
 
                 axios.get("http://localhost:5000/resume", {
                     params: {
@@ -79,13 +80,13 @@ export default defineComponent({
                     console.error(e);
                 }).finally(() => {
                     store.state.showLoadingScreen = false;
-                    document.querySelector("body").style.overflow = "";
+                    store.state.bodyOverflow = "auto";
                 });
             },
             resetFormFields: () => {
                 store.state.resume.relevantSkills = [];
                 store.state.resume.competency = 'Microservices';
-            }
+            },
         }
     }
 });

@@ -3,7 +3,7 @@
         <p>{{ name }}</p>
         <button
             @click.prevent="$emit('modifySkill', {
-                method: 'REMOVE',
+                method: ModifySkillMethod.REMOVE,
                 skill: name
             })">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
@@ -14,6 +14,8 @@
 </template>
 
 <script lang="ts">
+import { ModifySkillMethod } from '@/util/ModifySkillPayload';
+
 export default {
     props: {
         name: String

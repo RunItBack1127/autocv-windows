@@ -33,7 +33,7 @@
 import SiteHeader from '@/components/SiteHeader.vue';
 import LoadingScreen from '@/components/LoadingScreen.vue';
 import { computed } from '@vue/reactivity';
-import { defineComponent } from 'vue';
+import { defineComponent, ref } from 'vue';
 import { useRoute } from 'vue-router';
 import { useStore } from 'vuex';
 import axios from 'axios';
@@ -59,6 +59,7 @@ export default defineComponent({
             routeName: computed(() => useRoute().name),
             showCopySuccess: false,
             loadingCopy: false,
+            bg: 'black',
             copyCoverLetter: () => {
                 this.setLoading(true);
 

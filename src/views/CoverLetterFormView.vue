@@ -40,7 +40,7 @@ export default defineComponent({
             onSubmit: (e: Event) => {
                 e.preventDefault();
                 store.state.showLoadingScreen = true;
-                document.querySelector("body").style.overflow = "hidden";
+                store.state.bodyOverflow = "hidden";
 
                 axios.get("http://localhost:5000/cv", {
                     params: {
@@ -56,7 +56,7 @@ export default defineComponent({
                     console.error(e);
                 }).finally(() => {
                     store.state.showLoadingScreen = false;
-                    document.querySelector("body").style.overflow = "";
+                    store.state.bodyOverflow = "auto";
                 });
             },
             resetFormFields: () => {
