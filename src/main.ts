@@ -54,8 +54,7 @@ const store = createStore({
                 applicantRole: 'Software Engineer',
                 coverLetterContent: 'Default'
             },
-            showLoadingScreen: false,
-            bodyOverflow: 'auto'
+            showLoadingScreen: false
         }
     }
 });

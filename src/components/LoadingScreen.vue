@@ -1,5 +1,5 @@
 <template>
-    <article class="loading-screen-container" v-show="showLoadingScreen">
+    <article v-show="showLoadingScreen">
         <section>
             <div class="lds-dual-ring"></div>
             <h1>Generating {{ routeName }}</h1>
@@ -20,20 +20,15 @@ export default defineComponent({
 
         return {
             routeName: computed(() => useRoute().name),
-            showLoadingScreen: computed(() => store.state.showLoadingScreen),
-            bodyOverflow: computed(() => store.state.bodyOverflow)
+            showLoadingScreen: computed(() => store.state.showLoadingScreen)
         }
     }
 });
 </script>
 
-<style lang="scss">
-body {
-    overflow: v-bind('bodyOverflow');
-}
-
-article.loading-screen-container {
-    position: absolute;
+<style lang="scss" scoped>
+article {
+    position: fixed;
     top: 0;
     left: 0;
     width: 100vw;

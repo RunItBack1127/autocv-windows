@@ -63,10 +63,16 @@ export default defineComponent({
                     return sk !== skill;
                 });
             },
+            setBodyOverflow(overflow: string) {
+                const body = document.querySelector('body');
+                if( body != null ) {
+                    body.style.overflow = overflow;
+                }
+            },
             onSubmit: (e: Event) => {
                 e.preventDefault();
                 store.state.showLoadingScreen = true;
-                store.state.bodyOverflow = "hidden";
+                this.setBodyOverflow("hidden");
 
                 axios.get("http://localhost:8000/resume", {
                     params: {
@@ -80,7 +86,7 @@ export default defineComponent({
                     console.error(e);
                 }).finally(() => {
                     store.state.showLoadingScreen = false;
-                    store.state.bodyOverflow = "auto";
+                    this.setBodyOverflow("auto");
                 });
             },
             resetFormFields: () => {
