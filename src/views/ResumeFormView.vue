@@ -62,6 +62,8 @@ export default defineComponent({
             },
             onSubmit: (e: Event) => {
                 e.preventDefault();
+                store.state.showLoadingScreen = true;
+                document.querySelector("body").style.overflow = "hidden";
 
                 axios.get("http://localhost:5000/resume", {
                     params: {
@@ -71,6 +73,11 @@ export default defineComponent({
                     }
                 }).then((response) => {
                     window.open(response.data.pdf);
+                }).catch((e) => {
+                    console.error(e);
+                }).finally(() => {
+                    store.state.showLoadingScreen = false;
+                    document.querySelector("body").style.overflow = "";
                 });
             },
             resetFormFields: () => {

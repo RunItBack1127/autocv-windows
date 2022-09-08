@@ -21,12 +21,12 @@ const router = createRouter({
         },
         {
             path: '/resume',
-            name: 'Resume',
+            name: 'Resum\u00e9'.toLowerCase(),
             component: ResumeFormView
         },
         {
             path: '/cv',
-            name: 'Cover Letter',
+            name: 'Cover Letter'.toLowerCase(),
             component: CoverLetterFormView
         },
         {
@@ -54,7 +54,7 @@ const store = createStore({
                 applicantRole: 'Software Engineer',
                 coverLetterContent: 'Default'
             },
-            showLoadingScreen: true
+            showLoadingScreen: false
         }
     },
     mutations: {

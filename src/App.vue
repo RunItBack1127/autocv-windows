@@ -23,10 +23,10 @@
                     <router-link to="/settings">Settings</router-link>
                 </li>
             </ul>
+            <LoadingScreen />
         </aside>
         <router-view></router-view>
     </main>
-    <LoadingScreen />
 </template>
 
 <script lang="ts">
