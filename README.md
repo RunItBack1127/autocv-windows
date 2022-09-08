@@ -1,4 +1,6 @@
 # AutoCV
+![AutoCV frontend](./src/assets/autocv_frontend.PNG)
+
 All-in-one purpose-built resume and cover letter generator and automation tool, designed for Windows.
 
 ## Description
