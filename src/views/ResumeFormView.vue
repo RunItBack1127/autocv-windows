@@ -33,6 +33,7 @@ import SiteHeader from '@/components/SiteHeader.vue';
 import { computed } from '@vue/reactivity';
 import { defineComponent } from 'vue';
 import { useStore } from 'vuex';
+import axios from 'axios';
 import SkillsDashboard from '../components/SkillsDashboard.vue';
 import SubmitResetMenu from '../components/SubmitResetMenu.vue';
 
@@ -61,6 +62,16 @@ export default defineComponent({
             },
             onSubmit: (e: Event) => {
                 e.preventDefault();
+
+                axios.get("http://localhost:5000/resume", {
+                    params: {
+                        competency: store.state.resume.competency,
+                        relevantSkills: store.state.resume.relevantSkills.join(","),
+                        applicantRole: store.state.settings.applicantRole
+                    }
+                }).then((response) => {
+                    window.open(response.data.pdf);
+                });
             },
             resetFormFields: () => {
                 store.state.resume.relevantSkills = [];

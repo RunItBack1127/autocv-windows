@@ -20,13 +20,21 @@ RESUME_CV_FONT_NAME = "Radian Book"
 RESUME_CV_FONT_SIZE = 12
 
 # Define paths for all application roles
-SOFTWARE_ENGINEER_PATH__MICROSERVIES_RESUME = "templates/resume/microservices/WPG_Software_Engineer.docx.zip"
+SOFTWARE_ENGINEER_PATH__MICROSERVICES_RESUME = "templates/resume/microservices/WPG_Software_Engineer.docx.zip"
 FRONT_END_ENGINEER_PATH__MICROSERVICES_RESUME = "templates/resume/microservices/WPG_Front_End_Engineer.docx.zip"
 FULL_STACK_ENGINEER_PATH__MICROSERVICES_RESUME = "templates/resume/microservices/WPG_Full_Stack_Engineer.docx.zip"
 
-SOFTWARE_ENGINEER_PATH__MICROSERVIES_GENERATED_RESUME = "templates/resume/microservices/generated/WPG_Software_Engineer.docx.zip"
+SOFTWARE_ENGINEER_PATH__DATABASES_RESUME = "templates/resume/databases/WPG_Software_Engineer.docx.zip"
+FRONT_END_ENGINEER_PATH__DATABASES_RESUME = "templates/resume/databases/WPG_Front_End_Engineer.docx.zip"
+FULL_STACK_ENGINEER_PATH__DATABASES_RESUME = "templates/resume/databases/WPG_Full_Stack_Engineer.docx.zip"
+
+SOFTWARE_ENGINEER_PATH__MICROSERVICES_GENERATED_RESUME = "templates/resume/microservices/generated/WPG_Software_Engineer.docx.zip"
 FRONT_END_ENGINEER_PATH__MICROSERVICES_GENERATED_RESUME = "templates/resume/microservices/generated/WPG_Front_End_Engineer.docx.zip"
 FULL_STACK_ENGINEER_PATH__MICROSERVICES_GENERATED_RESUME = "templates/resume/microservices/generated/WPG_Full_Stack_Engineer.docx.zip"
+
+SOFTWARE_ENGINEER_PATH__DATABASES_GENERATED_RESUME = "templates/resume/databases/generated/WPG_Software_Engineer.docx.zip"
+FRONT_END_ENGINEER_PATH__DATABASES_GENERATED_RESUME = "templates/resume/databases/generated/WPG_Front_End_Engineer.docx.zip"
+FULL_STACK_ENGINEER_PATH__DATABASES_GENERATED_RESUME = "templates/resume/databases/generated/WPG_Full_Stack_Engineer.docx.zip"
 
 SOFTWARE_ENGINEER_PATH__COVER_LETTER = "templates/cover_letter/WPG_Software_Engineer.docx"
 FRONT_END_ENGINEER_PATH__COVER_LETTER = "templates/cover_letter/WPG_Front_End_Engineer.docx"
@@ -65,25 +73,25 @@ def generate_resume():
 
     if applicant_role == "Software Engineer":
         if competency == "Microservices":
-            input_filename = SOFTWARE_ENGINEER_PATH__RESUME
-            output_filename = SOFTWARE_ENGINEER_PATH__MICROSERVICES_GENERATED_RESUME
-        elif competency == "Databases":
             input_filename = SOFTWARE_ENGINEER_PATH__MICROSERVICES_RESUME
             output_filename = SOFTWARE_ENGINEER_PATH__MICROSERVICES_GENERATED_RESUME
+        elif competency == "Databases":
+            input_filename = SOFTWARE_ENGINEER_PATH__DATABASES_RESUME
+            output_filename = SOFTWARE_ENGINEER_PATH__DATABASES_GENERATED_RESUME
     elif applicant_role == "Front End Engineer":
         if competency == "Microservices":
             input_filename = FRONT_END_ENGINEER_PATH__RESUME
             output_filename = FRONT_END_ENGINEER_PATH__MICROSERVICES_GENERATED_RESUME
         elif competency == "Databases":
-            input_filename = FRONT_END_ENGINEER_PATH__MICROSERVICES_RESUME
-            output_filename = FRONT_END_ENGINEER_PATH__MICROSERVICES_GENERATED_RESUME
+            input_filename = FRONT_END_ENGINEER_PATH__DATABASES_RESUME
+            output_filename = FRONT_END_ENGINEER_PATH__DATABASES_GENERATED_RESUME
     elif applicant_role == "Full Stack Engineer":
         if competency == "Microservices":
             input_filename = FULL_STACK_ENGINEER_PATH__RESUME
             output_filename = FULL_STACK_ENGINEER_PATH__MICROSERVICES_GENERATED_RESUME
         elif competency == "Databases":
-            input_filename = FULL_STACK_ENGINEER_PATH__MICROSERVICES_RESUME
-            output_filename = FULL_STACK_ENGINEER_PATH__MICROSERVICES_GENERATED_RESUME
+            input_filename = FULL_STACK_ENGINEER_PATH__DATABASES_RESUME
+            output_filename = FULL_STACK_ENGINEER_PATH__DATABASES_GENERATED_RESUME
 
     with zipfile.ZipFile(input_filename, "r") as input_doc, zipfile.ZipFile(output_filename, "w") as output_doc:
         for input_doc_info in input_doc.infolist():
@@ -93,11 +101,11 @@ def generate_resume():
 
                     relevantSkills = request.args["relevantSkills"].split(",")
                     for (skill_index, skill) in enumerate(relevantSkills):
-                        content.replace(f"{{{{L{skill_index + 1}}}}}", skill)
+                        content = content.replace(bytes(f"{{{{L{skill_index + 1}}}}}", "utf-8"), bytes(skill, "utf-8"))
 
-                    output_doc.writestr(f"word/{input_doc_info.filename}", content)
+                    output_doc.writestr(f"word/document.xml", content)
                 else:
-                    output_doc.writeStr(input_doc_info.filename, content)
+                    output_doc.writestr(input_doc_info.filename, content)
     
     output_doc_renamed = output_filename[:-4]
     pdf_filename = output_doc_renamed.replace(".docx", ".pdf")
