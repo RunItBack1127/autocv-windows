@@ -50,7 +50,7 @@ export default defineComponent({
 
                 axios.get("http://localhost:8000/cv", {
                     params: {
-                        recruiterName: store.state.coverLetter.recruiterName === "" ?
+                        recruiterName: !store.state.coverLetter.useCustomRecruiterName ?
                             'Corporate Recruiter' : store.state.coverLetter.recruiterName,
                         companyName: store.state.coverLetter.companyName,
                         nameOfRole: store.state.coverLetter.nameOfRole,

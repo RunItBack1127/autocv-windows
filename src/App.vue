@@ -67,8 +67,8 @@ export default defineComponent({
                     params: {
                         nameOfRole: store.state.coverLetter.nameOfRole,
                         companyName: store.state.coverLetter.companyName,
-                        recruiterName: store.state.coverLetter.useCustomRecruiterName ?
-                            store.state.coverLetter.recruiterName : 'Corporate Recruiter',
+                        recruiterName: !store.state.coverLetter.useCustomRecruiterName ?
+                            'Corporate Recruiter' : store.state.coverLetter.recruiterName,
                         coverLetterContent: store.state.settings.coverLetterContent
                     }
                 }).then((response) => {
