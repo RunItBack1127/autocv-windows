@@ -34,7 +34,7 @@
 import SiteHeader from '@/components/SiteHeader.vue';
 import SkillsDashboard from '@/components/SkillsDashboard.vue';
 import SubmitResetMenu from '@/components/SubmitResetMenu.vue';
-import { ModifySkillPayload, ModifySkillMethod } from '@/util/ModifySkillPayload';
+import { ModifySkillPayload, ModifySkillMethod } from '../util/ModifySkillPayload';
 import { computed } from '@vue/reactivity';
 import { defineComponent } from 'vue';
 import { useStore } from 'vuex';
@@ -68,7 +68,7 @@ export default defineComponent({
                 store.state.showLoadingScreen = true;
                 store.state.bodyOverflow = "hidden";
 
-                axios.get("http://localhost:5000/resume", {
+                axios.get("http://localhost:8000/resume", {
                     params: {
                         competency: store.state.resume.competency,
                         relevantSkills: store.state.resume.relevantSkills.join(","),

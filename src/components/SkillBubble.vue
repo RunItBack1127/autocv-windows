@@ -14,7 +14,7 @@
 </template>
 
 <script lang="ts">
-import { ModifySkillMethod } from '@/util/ModifySkillPayload';
+import { ModifySkillMethod } from '../util/ModifySkillPayload';
 
 export default {
     props: {

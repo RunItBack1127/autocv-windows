@@ -63,7 +63,7 @@ export default defineComponent({
             copyCoverLetter: () => {
                 this.setLoading(true);
 
-                axios.get("http://localhost:5000/copy", {
+                axios.get("http://localhost:8000/copy", {
                     params: {
                         nameOfRole: store.state.coverLetter.nameOfRole,
                         companyName: store.state.coverLetter.companyName,

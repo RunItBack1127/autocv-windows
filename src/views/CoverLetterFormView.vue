@@ -42,7 +42,7 @@ export default defineComponent({
                 store.state.showLoadingScreen = true;
                 store.state.bodyOverflow = "hidden";
 
-                axios.get("http://localhost:5000/cv", {
+                axios.get("http://localhost:8000/cv", {
                     params: {
                         recruiterName: store.state.coverLetter.recruiterName,
                         companyName: store.state.coverLetter.companyName,

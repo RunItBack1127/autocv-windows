@@ -6,7 +6,10 @@
         </div>
         <input
             :value="modelValue"
-            @input="$emit('update:modelValue', $event.target?.value)"
+            @input="(e) => {
+                const target: HTMLInputElement = e.target as HTMLInputElement;
+                $emit('update:modelValue', target.value);
+            }"
             :disabled="disabled === true"
             type="text" />
     </section>

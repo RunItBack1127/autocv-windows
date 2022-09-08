@@ -14,8 +14,8 @@
 <script lang="ts">
 import SkillBubble from '@/components/SkillBubble.vue';
 import { defineComponent } from 'vue';
-import type { ModifySkillPayload } from '@/util/ModifySkillPayload';
-import { ModifySkillMethod } from '@/util/ModifySkillPayload';
+import type { ModifySkillPayload } from '../util/ModifySkillPayload';
+import { ModifySkillMethod } from '../util/ModifySkillPayload';
 
 export default defineComponent({
     components: {
@@ -29,13 +29,16 @@ export default defineComponent({
         processInput(e: KeyboardEvent) {
             if( e.key === "Enter" ) {
                 e.preventDefault();
-                if( e.target.value !== "" ) {
+
+                const target: HTMLInputElement = e.target as HTMLInputElement;
+
+                if( target.value !== "" ) {
                     this.$emit( "modifySkill", {
                         method: ModifySkillMethod.ADD,
-                        skill: e.target.value
+                        skill: target.value
                     } );
                 }
-                e.target.value = "";
+                target.value = "";
             }
         }
     }
