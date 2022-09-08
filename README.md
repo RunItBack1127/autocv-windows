@@ -23,7 +23,7 @@ The app uses a `Python` wrapper around the GitHub REST API ([pygithub](https://g
 
 *NOTE: Although the app is built for Windows, the backend can at least be **initialized** on OSX and \*nix systems.*
 
-See more about setting up the backend here.
+See more about setting up the backend [here](./src/backend/README.md).
 
 #### Windows environment setup
 ```
