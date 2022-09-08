@@ -1,16 +1,56 @@
-# Vue 3 + TypeScript + Vite
+# AutoCV
+All-in-one purpose-built resume and cover letter generator and automation tool, designed for Windows.
 
-This template should help get you started developing with Vue 3 and TypeScript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+## Description
+AutoCV is a full-stack web application built with [Vue.js](https://vuejs.org), [Typescript](https://typescriptlang.org) and [Flask](https://flask.palletsprojects.com/) to automate the process of modifying and uploading various different resumes and cover letters for different job applications. The app uses a number of templated fields in set of resumes and cover letter files on the backend, and the user can modify the contents of these fields from the frontend across several configurable options. Finally, the user can submit these changes and leverage the [GitHub REST API](https://docs.github.com/en/rest) for automatically converting these files to PDFs, uploading them to a file storage repository, and downloading them directly from the convenience of the browser.
 
-## Recommended IDE Setup
+## Local Development
+The app can be built and run separately, or using the included Docker build staging.
 
-- [VS Code](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar)
+### Running the frontend separarely
+Using NPM
+```
+npm run dev
+```
 
-## Type Support For `.vue` Imports in TS
+Using yarn
+```
+yarn run dev
+```
 
-Since TypeScript cannot handle type information for `.vue` imports, they are shimmed to be a generic Vue component type by default. In most cases this is fine if you don't really care about component prop types outside of templates. However, if you wish to get actual prop types in `.vue` imports (for example to get props validation when using manual `h(...)` calls), you can enable Volar's Take Over mode by following these steps:
+### Running the backend separately
+The app uses a `Python` wrapper around the GitHub REST API ([pygithub](https://github.com/PyGithub/PyGithub)) - the library is initialized with a `Personal Access Token` (steps for generating this token can be found [here](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token)), and the token is read from the backend through the `GITHUB_TOKEN` environment variable. 
 
-1. Run `Extensions: Show Built-in Extensions` from VS Code's command palette, look for `TypeScript and JavaScript Language Features`, then right click and select `Disable (Workspace)`. By default, Take Over mode will enable itself if the default TypeScript extension is disabled.
-2. Reload the VS Code window by running `Developer: Reload Window` from the command palette.
+*NOTE: Although the app is built for Windows, the backend can at least be **initialized** on OSX and \*nix systems.*
 
-You can learn more about Take Over mode [here](https://github.com/johnsoncodehk/volar/discussions/471).
+See more about setting up the backend here.
+
+#### Windows environment setup
+```
+set GITHUB_TOKEN=INSERT_YOUR_PERSONAL_ACCESS_TOKEN_HERE
+python server.py
+```
+
+#### OSX/Linux environment setup
+```
+export GITHUB_TOKEN=INSERT_YOUR_PERSONAL_ACCESS_TOKEN_HERE
+python server.py
+```
+
+OR
+
+```
+GITHUB_TOKEN=INSERT_YOUR_PERSONAL_ACCESS_TOKEN_HERE python server.py
+```
+
+### Docker staging
+
+#### Building frontend and backend images
+```
+docker-compose build
+```
+
+#### Running Docker images
+```
+docker-compose up --remove-orphans
+```
