@@ -184,7 +184,7 @@ def generate_cover_letter():
 
     cover_letter_content = request.args["coverLetterContent"]
     if cover_letter_content == "Self Driving":
-        p__default_av_toggle.text = "Having followed the changing self-driving landscape closely since 2015, joining the research team at the EcoPRT autonomous vehicle lab at NC State was my first step in making my mark on the industry. Assuming the role of the lead web developer further enforced my technical skillset, with the goal of redesigning the web presence for showcasing the work of deploying an autonomous vehicle. Maintaining and organizing all of the assets and leveraging each new feature, along with overseeing the design and technical implementation of the website, demonstrates my ability to contribute and dedicate to a project within the scope of a professional environment."
+        p__default_av_toggle.text = "\tHaving followed the changing self-driving landscape closely since 2015, joining the research team at the EcoPRT autonomous vehicle lab at NC State was my first step in making my mark on the industry. Assuming the role of the lead web developer further enforced my technical skillset, with the goal of redesigning the web presence for showcasing the work of deploying an autonomous vehicle. Maintaining and organizing all of the assets and leveraging each new feature, along with overseeing the design and technical implementation of the website, demonstrates my ability to contribute and dedicate to a project within the scope of a professional environment."
 
     p__company_name.text = p__company_name.text.replace("{{COMPANY_NAME}}", request.args["companyName"])
 
