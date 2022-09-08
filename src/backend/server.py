@@ -3,12 +3,9 @@ from flask_cors import CORS
 
 from docx import Document
 from docx.shared import Pt
-from docx2pdf import convert
 
 from github import Github
 
-import comtypes
-import comtypes.client
 import os
 import uuid
 import zipfile
@@ -53,7 +50,7 @@ def get_abs_path(filename):
 app = Flask(__name__)
 CORS(app, resources={r'/*': {'origins': '*'}})
 
-github = Github("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")
+github = Github(os.environ.get("GITHUB_TOKEN"))
 repo = github.get_user().get_repo("autocv-cover-letters")
 
 """
@@ -82,14 +79,14 @@ def generate_resume():
             output_filename = SOFTWARE_ENGINEER_PATH__DATABASES_GENERATED_RESUME
     elif applicant_role == "Front End Engineer":
         if competency == "Microservices":
-            input_filename = FRONT_END_ENGINEER_PATH__RESUME
+            input_filename = FRONT_END_ENGINEER_PATH__MICROSERVICES_RESUME
             output_filename = FRONT_END_ENGINEER_PATH__MICROSERVICES_GENERATED_RESUME
         elif competency == "Databases":
             input_filename = FRONT_END_ENGINEER_PATH__DATABASES_RESUME
             output_filename = FRONT_END_ENGINEER_PATH__DATABASES_GENERATED_RESUME
     elif applicant_role == "Full Stack Engineer":
         if competency == "Microservices":
-            input_filename = FULL_STACK_ENGINEER_PATH__RESUME
+            input_filename = FULL_STACK_ENGINEER_PATH__MICROSERVICES_RESUME
             output_filename = FULL_STACK_ENGINEER_PATH__MICROSERVICES_GENERATED_RESUME
         elif competency == "Databases":
             input_filename = FULL_STACK_ENGINEER_PATH__DATABASES_RESUME
@@ -112,6 +109,9 @@ def generate_resume():
     output_doc_renamed = output_filename[:-4]
     pdf_filename = output_doc_renamed.replace(".docx", ".pdf")
     os.rename(output_filename, output_doc_renamed)
+
+    import comtypes
+    import comtypes.client
 
     comtypes.CoInitialize()
 
@@ -191,6 +191,9 @@ def generate_cover_letter():
     input_doc.save(output_filename)
     pdf_filename = output_filename.replace(".docx", ".pdf")
 
+    import comtypes
+    import comtypes.client
+
     comtypes.CoInitialize()
 
     word = comtypes.client.CreateObject('Word.Application')
@@ -213,6 +216,12 @@ def generate_cover_letter():
 
     return jsonify(pdf=github_response['content'].download_url)
 
+"""
+    GET endpoint for retrieving a formatted template cover letter
+    in raw text for the end user - this text is then persisted to
+    the system clipboard for applications that do not have a file
+    field for the cover letter
+"""
 @app.route('/copy', methods=['GET'])
 def copy_cover_letter():
     recruiter_name = request.args["recruiterName"]
@@ -226,7 +235,7 @@ def copy_cover_letter():
     elif cover_letter_content == "Default":
         default_or_av_paragraph = "Contributing in a team on a large project across many different microservices also improved my overall technical skillset, placing me in many different roles for various parts of the development cycle - working in the DevEx team at SailPoint required me to sometimes assume frontend responsibilities, other times required a richer set of backend skills, and a few times would require me to exercise more of my full stack expertise. Ensuring effective communication across teams and within our own team was critical, and deploying a consistent and functional product for the end user was kept as our paramount goal, in spite of a specific set of technologies necessary."
 
-    contents = f"Dear {recruiter_name},\n\n{TAB_TO_SPACES}I wanted to reach out to you to further express my interest in the {name_of_role} position. As a recent graduate of the Computer Science program at North Carolina State University, a Software Engineer Intern for SailPoint Technologies, and as the current lead web developer for the EcoPRT autonomous vehicle lab at NC State, I believe that my technically sound and detailed set of front end skills and coding architecture expertise, along with my ability to collaborate, communicate, and implement punctually within a team, would make me an ideal candidate for this role.\n\n{TAB_TO_SPACES}I possess a strong facility in an array of frontend languages, notably Vue, Node.js and Typescript, along with a robust set of backend technologies in Java, C and C++, and Python. My capacity for developing alone for either personal projects, coursework, or independent lab work would integrate seamlessly with a larger team – I can be expected to fulfill expectations concisely, accurately, and under demanding and changing time constraints without sacrificing quality or project longevity.\n{TAB_TO_SPACES}{default_or_av_paragraph}\n\n{TAB_TO_SPACES}My passion and dedication are the qualities I strive to bring to the position and the team. I am confident that I can work diligently with my potential co-workers and further promote the development process of {company_name}. Thank you for your consideration, and I look forward to hearing from you to discuss the position further.\n\n\nSincerely,\nWeston P. Greene"
+    contents = f"Dear {recruiter_name},\n\n{TAB_TO_SPACES}I wanted to reach out to you to further express my interest in the {name_of_role} position. As a recent graduate of the Computer Science program at North Carolina State University, a Software Engineer Intern for SailPoint Technologies, and as the current lead web developer for the EcoPRT autonomous vehicle lab at NC State, I believe that my technically sound and detailed set of front end skills and coding architecture expertise, along with my ability to collaborate, communicate, and implement punctually within a team, would make me an ideal candidate for this role.\n\n{TAB_TO_SPACES}I possess a strong facility in an array of frontend languages, notably Vue, Node.js and Typescript, along with a robust set of backend technologies in Java, C and C++, and Python. My capacity for developing alone for either personal projects, coursework, or independent lab work would integrate seamlessly with a larger team – I can be expected to fulfill expectations concisely, accurately, and under demanding and changing time constraints without sacrificing quality or project longevity.\n\n{TAB_TO_SPACES}{default_or_av_paragraph}\n\n{TAB_TO_SPACES}My passion and dedication are the qualities I strive to bring to the position and the team. I am confident that I can work diligently with my potential co-workers and further promote the development process of {company_name}. Thank you for your consideration, and I look forward to hearing from you to discuss the position further.\n\n\nSincerely,\nWeston P. Greene"
 
     return jsonify(contents=contents)
 

@@ -1,18 +1,21 @@
 <template>
     <form @submit.prevent="onSubmit">
-        <BasicFormInput title="Name of Role" subText="Software Engineer" v-model="nameOfRole" />
-        <BasicFormInput title="Company Name" subText="Cruise, LLC" v-model="companyName" />
+        <BasicFormInput title="Name of Role" subText="Software Engineer" v-model="store.state.coverLetter.nameOfRole" />
+        <BasicFormInput title="Company Name" subText="Cruise, LLC" v-model="store.state.coverLetter.companyName" />
         <div class="customRecruiterContainer">
             <label for="customRecruiterCheckbox">Use custom recruiter name?</label>
-            <input tabindex="-1" type="checkbox" v-model="useCustomRecruiterName" />
+            <input tabindex="-1" type="checkbox" v-model="store.state.coverLetter.useCustomRecruiterName" />
         </div>
         <BasicFormInput
             title="Recruiter Name"
             subText="Bryan Danielson"
-            v-model="recruiterName"
-            :disabled="!useCustomRecruiterName" />
+            v-model="store.state.coverLetter.recruiterName"
+            :disabled="!store.state.coverLetter.useCustomRecruiterName" />
         <SubmitResetMenu
-            :disabled="nameOfRole === '' || companyName === '' || (useCustomRecruiterName && recruiterName === '')"
+            :disabled="store.state.coverLetter.nameOfRole === '' ||
+                store.state.coverLetter.companyName === '' ||
+                (store.state.coverLetter.useCustomRecruiterName
+                && store.state.coverLetter.recruiterName === '')"
             @reset-form-fields="resetFormFields" />
     </form>
 </template>
@@ -21,7 +24,7 @@
 import BasicFormInput from '@/components/BasicFormInput.vue';
 import SubmitResetMenu from '../components/SubmitResetMenu.vue';
 import { defineComponent } from 'vue';
-import { useStore } from 'vuex';
+import { storeKey, useStore } from 'vuex';
 import axios from 'axios';
 
 export default defineComponent({
@@ -33,16 +36,7 @@ export default defineComponent({
         const store = useStore();
 
         return {
-            nameOfRole: store.state.coverLetter.nameOfRole,
-            companyName: store.state.coverLetter.companyName,
-            recruiterName: store.state.coverLetter.recruiterName,
-            useCustomRecruiterName: store.state.coverLetter.useCustomRecruiterName,
-            persistState: () => {
-                store.state.coverLetter.nameOfRole = this.nameOfRole;
-                store.state.coverLetter.companyName = this.companyName;
-                store.state.coverLetter.recruiterName = this.recruiterName;
-                store.state.coverLetter.useCustomRecruiterName = this.useCustomRecruiterName;
-            },
+            store,
             onSubmit: (e: Event) => {
                 e.preventDefault();
                 store.state.showLoadingScreen = true;
@@ -50,9 +44,9 @@ export default defineComponent({
 
                 axios.get("http://localhost:5000/cv", {
                     params: {
-                        recruiterName: this.recruiterName === "" ? 'Corporate Recruiter' : this.recruiterName,
-                        companyName: this.companyName,
-                        nameOfRole: this.nameOfRole,
+                        recruiterName: store.state.coverLetter.recruiterName,
+                        companyName: store.state.coverLetter.companyName,
+                        nameOfRole: store.state.coverLetter.nameOfRole,
                         applicantRole: store.state.settings.applicantRole,
                         coverLetterContent: store.state.settings.coverLetterContent
                     }
@@ -66,15 +60,12 @@ export default defineComponent({
                 });
             },
             resetFormFields: () => {
-                this.nameOfRole = "";
-                this.companyName = "";
-                this.recruiterName = "";
-                this.useCustomRecruiterName = false;
+                store.state.coverLetter.nameOfRole = "";
+                store.state.coverLetter.companyName = "";
+                store.state.coverLetter.recruiterName = "";
+                store.state.coverLetter.useCustomRecruiterName = false;
             }
         }
-    },
-    beforeRouteLeave() {
-        this.persistState();
     }
 })
 </script>
