@@ -58,4 +58,4 @@ docker-compose up --remove-orphans
 ```
 
 ## Cross Platform
-A [cross platform implementation of this project](https://github.com/RunItBack/autocv-unix) has been developed that leverages LibreOffice instead of Microsoft Word, at a *significant* performance advantage, and has been tested and works on Windows, MacOS, and Linux.
+A [cross platform implementation of this project](https://github.com/RunItBack1127/autocv-unix) has been developed that leverages LibreOffice instead of Microsoft Word, at a *significant* performance advantage, and has been tested and works on Windows, MacOS, and Linux.
